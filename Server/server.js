@@ -1,52 +1,53 @@
 const express = require('express');
 const dotenv = require('dotenv');
+const path = require('path');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+// Custom imports
 const DBcon = require('./utlis/db.js');
-const router = require('./routes/auth.js');
-const blogrouter = require('./routes/blogRoutes.js');
+const authRouter = require('./routes/auth.js');
+const blogRouter = require('./routes/blogRoutes.js');
 const dashboardRouter = require('./routes/Dashboard.js');
 const commentRouter = require('./routes/Comments.js');
 const publicRoute = require('./routes/Public.js');
-const cookieparser = require('cookie-parser');
-const cors = require('cors');
-const path = require('path');
 
 dotenv.config();
 const PORT = process.env.PORT || 5001;
 const app = express();
 
-// ✅ MongoDB connect
+// ✅ MongoDB connection
 DBcon();
 
-// ✅ CORS for frontend
+// ✅ CORS configuration
 app.use(cors({
   origin: 'https://blogify-web-app-mkqy.onrender.com',
   credentials: true,
 }));
 
 // ✅ Middlewares
-const _dirname = path.resolve();
-app.use(cookieparser());
+app.use(cookieParser());
 app.use(express.json());
 
-// ✅ Serve static public folder
-app.use(express.static(path.join(_dirname, 'public')));
+// ✅ Static files
+const _dirname = path.resolve();
+app.use('/images', express.static(path.join(_dirname, 'public/images'))); // for images
+app.use(express.static(path.join(_dirname, 'public'))); // for other static files
 
-// ✅ If images are inside public/images/xyz.jpg
-// Then URL will be: https://yourdomain.com/images/xyz.jpg
-// No need to use `/images` route separately if inside public
-
-// ✅ All API routes
-app.use('/auth', router);
-app.use('/blog', blogrouter);
+// ✅ API Routes
+app.use('/auth', authRouter);
+app.use('/blog', blogRouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/comment', commentRouter);
 app.use('/api', publicRoute);
-app.use('/images', express.static(path.join(_dirname, 'public/images')));
-// ✅ Serve frontend React (or Vite) app from /Client/dist
+
+// ✅ Serve frontend build
 app.use(express.static(path.join(_dirname, 'Client/dist')));
 
-// ✅ React SPA fallback route (if needed)
-
+// ✅ React SPA fallback (uncomment if using client-side routing like React Router)
+// app.get('*', (req, res) => {
+//   res.sendFile(path.join(_dirname, 'Client/dist/index.html'));
+// });
 
 // ✅ Start server
 app.listen(PORT, () => {
