@@ -41,7 +41,7 @@ app.use('/blog', blogrouter);
 app.use('/dashboard', dashboardRouter);
 app.use('/comment', commentRouter);
 app.use('/api', publicRoute);
-
+app.use('/images', express.static(path.join(_dirname, 'public/images')));
 // ✅ Serve frontend React (or Vite) app from /Client/dist
 app.use(express.static(path.join(_dirname, 'Client/dist')));
 
