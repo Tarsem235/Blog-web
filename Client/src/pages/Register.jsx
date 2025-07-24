@@ -63,7 +63,7 @@ const Register = () => {
       formData.append("profile", profile);
 
       const res = await axios.post(
-        "http://localhost:5000/auth/register",
+        "https://blogify-web-app-mkqy.onrender.com/auth/register",
         formData,
         {
           headers: {

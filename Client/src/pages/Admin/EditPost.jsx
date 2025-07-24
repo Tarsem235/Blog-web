@@ -36,7 +36,7 @@ const EditPost = () => {
       formData.append("desc", form.desc);
       if (image) formData.append("postimage", image);
 
-      await axios.patch(`http://localhost:5000/blog/update/${id}`, formData, {
+      await axios.patch(`https://blogify-web-app-mkqy.onrender.com/blog/update/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

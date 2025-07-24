@@ -18,7 +18,7 @@ export default function BlogUserProfile() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/dashboard");
+        const res = await axios.get("https://blogify-web-app-mkqy.onrender.com/dashboard");
         const data = res.data;
         setPosts(data.posts || []);
         setAllUsers(data.Users || []);
@@ -67,7 +67,7 @@ export default function BlogUserProfile() {
 
       const token = localStorage.getItem("token");
       const res = await axios.put(
-        "http://localhost:5000/auth/updateProfile",
+        "host:5000/auth/updateProfile",
         formPayload,
         {
           headers: {
@@ -98,7 +98,7 @@ export default function BlogUserProfile() {
               src={
                 uploadFile
                   ? formData.profilePic
-                  : `http://localhost:5000/images/${formData.profilePic}`
+                  : `https://blogify-web-app-mkqy.onrender.com/images/${formData.profilePic}`
               }
               alt="profile"
               className="rounded-full w-36 h-36 border-2 border-pink-500 object-cover"
@@ -208,7 +208,7 @@ export default function BlogUserProfile() {
               >
                 <Link to={`/post/${post._id}`}>
                   <img
-                    src={`http://localhost:5000/images/${post.image}`}
+                    src={`https://blogify-web-app-mkqy.onrender.com/images/${post.image}`}
                     alt="Blog Post"
                     className="w-30 h-30 object-cover group-hover:scale-110 transition-transform duration-300"
                   />

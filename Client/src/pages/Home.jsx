@@ -7,7 +7,7 @@ import { BaseUrl } from "../Services/Endpoint";
 export default function HomePage() {
   const [posts , setPost]=useState([])
   useEffect(()=>{
- const res=axios.get("http://localhost:5000/blog/getPost")
+ const res=axios.get("https://blogify-web-app-mkqy.onrender.com/blog/getPost")
 .then((res)=> {
   setPost(res.data.posts)
   console.log(res.data.posts)

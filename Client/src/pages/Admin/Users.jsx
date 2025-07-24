@@ -9,7 +9,7 @@ export default function Users() {
     const getData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("http://localhost:5000/dashboard", {
+        const res = await axios.get("https://blogify-web-app-mkqy.onrender.com/dashboard", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -33,7 +33,7 @@ export default function Users() {
         const token = localStorage.getItem("token");
         console.log("📦 Token:", localStorage.getItem("token"));
 
-        await axios.delete(`http://localhost:5000/dashboard/delete/${id}`, {
+        await axios.delete(`https://blogify-web-app-mkqy.onrender.com/dashboard/delete/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

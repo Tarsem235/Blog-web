@@ -19,7 +19,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     setIsOpen(false);
     try {
-      const res = await axios.post("http://localhost:5000/auth/logout");
+      const res = await axios.post("https://blogify-web-app-mkqy.onrender.com/auth/logout");
       if (res.status === 200) {
         dispatch(removeUser());
         navigate("/");
@@ -67,7 +67,7 @@ const Navbar = () => {
               {/* Profile Image */}
               <img
                 onClick={toggleDropdown}
-                src={`http://localhost:5000/images/${user.profile}`}
+                src={`https://blogify-web-app-mkqy.onrender.com/images/${user.profile}`}
                 alt="profile"
                 className="h-12 w-12 hidden lg:block rounded-full border-2 border-blue-400 shadow-lg cursor-pointer hover:scale-110 hover:border-blue-500 transition duration-300 ease-in-out"
               />

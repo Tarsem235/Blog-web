@@ -11,7 +11,7 @@ export default function Dashboard() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/dashboard')
+        const res = await axios.get('https://blogify-web-app-mkqy.onrender.com/dashboard')
         const data = res.data
         setPosts(data.posts)
         setUser(data.Users)
@@ -33,7 +33,7 @@ const deletePost = async (id) => {
       const token = localStorage.getItem("token");
       console.log("📦 Token:", token);
 
-      await axios.delete(`http://localhost:5000/blog/delete/${id}`, {
+      await axios.delete(`https://blogify-web-app-mkqy.onrender.com/blog/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

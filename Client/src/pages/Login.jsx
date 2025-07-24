@@ -36,7 +36,7 @@ const Login = () => {
     if (Object.keys(validationErrors).length > 0) return;
 
     try {
-      const res = await axios.post("http://localhost:5000/auth/login", form);
+      const res = await axios.post("https://blogify-web-app-mkqy.onrender.com/auth/login", form);
       const data = res.data;
       localStorage.setItem("token", res.data.token);
       toast.success("Login successful 🎉", { position: "top-right" });

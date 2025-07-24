@@ -12,7 +12,7 @@ export default function AllPosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/blog/getPost");
+        const res = await axios.get("https://blogify-web-app-mkqy.onrender.com/blog/getPost");
         setPosts(res.data.posts);
       } catch (err) {
         console.error("Failed to fetch posts:", err);
@@ -27,7 +27,7 @@ export default function AllPosts() {
       if (!activePost) return;
       try {
         const res = await axios.get(
-          `http://localhost:5000/comment/addcomment/${activePost._id}`
+          `https://blogify-web-app-mkqy.onrender.com/comment/addcomment/${activePost._id}`
         );
         setComments(res.data.comments);
         console.log(res.data.comments);
@@ -42,7 +42,7 @@ export default function AllPosts() {
   const handlePostComment = async () => {
     if (!newComment.trim()) return;
     try {
-      const res = await axios.post("http://localhost:5000/comment/addcomment", {
+      const res = await axios.post("https://blogify-web-app-mkqy.onrender.com/comment/addcomment", {
         postId: activePost._id,
         user: "Tarsem", // Replace with logged-in user
         text: newComment,
@@ -70,7 +70,7 @@ export default function AllPosts() {
           >
             <div className="relative">
               <img
-                src={`http://localhost:5000/images/${post.image}`}
+                src={`https://blogify-web-app-mkqy.onrender.com/images/${post.image}`}
                 alt={post.title}
                 className="w-full h-48 object-cover rounded-t-2xl"
               />
@@ -107,7 +107,7 @@ export default function AllPosts() {
 
             {/* Post Details */}
             <img
-              src={`http://localhost:5000/images/${activePost.image}`}
+              src={`https://blogify-web-app-mkqy.onrender.com/images/${activePost.image}`}
               alt={activePost.title}
               className="w-full rounded-lg mb-4"
             />

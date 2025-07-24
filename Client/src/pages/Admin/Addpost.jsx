@@ -35,7 +35,7 @@ export default function AddPost() {
       console.log("Token:", token);
 
       const res = await axios.post(
-        "http://localhost:5000/blog/create",
+        "https://blogify-web-app-mkqy.onrender.com/blog/create",
         formData,
         {
           headers: {
