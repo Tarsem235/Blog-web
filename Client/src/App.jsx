@@ -13,7 +13,7 @@ import Addpost from "./pages/Admin/Addpost";
 import Users from "./pages/Admin/Users";
 import Allposts from "./pages/Admin/Allposts";
 import Dashboard from "./pages/Admin/Dashboard";
-import Splash from "./styles/Splash";
+import Splash from "./styles/Splash"
 import EditPost from "./pages/Admin/EditPost"
 function App() {
   const [show, setShow] = useState(true);
