@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
+import react from 'react'
 import { ReactTyped } from 'react-typed';
 
 const Splash = () => {
