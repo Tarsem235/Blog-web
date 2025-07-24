@@ -67,7 +67,7 @@ export default function BlogUserProfile() {
 
       const token = localStorage.getItem("token");
       const res = await axios.put(
-        "host:5000/auth/updateProfile",
+        "https://blogify-web-app-mkqy.onrender.com//auth/updateProfile",
         formPayload,
         {
           headers: {

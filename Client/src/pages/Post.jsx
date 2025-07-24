@@ -13,7 +13,7 @@ const SinglePost = () => {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const res = await axios.get(`${BaseUrl}/api/singlepost/${id}`, {
+        const res = await axios.get(`https://blogify-web-app-mkqy.onrender.com/api/singlepost/${id}`, {
           withCredentials: true, // 👈 if your backend uses cookies for auth
         });
         console.log("👉 Post Data:", res.data);
@@ -39,7 +39,7 @@ const SinglePost = () => {
 
   try {
     const res = await axios.post(
-      `${BaseUrl}/comment/addcomment`,
+      `https://blogify-web-app-mkqy.onrender.com/comment/addcomment`,
       {
         postId: id,
         comment: newComment,
@@ -102,7 +102,7 @@ const SinglePost = () => {
         {/* Post Card */}
         <div className="bg-white rounded-lg shadow-lg p-6">
           <img
-            src={`${BaseUrl}/images/${Post.image}`}
+            src={`https://blogify-web-app-mkqy.onrender.com/images/${Post.image}`}
             alt="Post Cover"
             className="w-full h-64 object-cover rounded-md mb-6"
           />
