@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import axios from "axios";
+import {BaseUrl, post} from "../Services/Endpoint"
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../redux/AuthReducer";
@@ -19,7 +19,7 @@ const Navbar = () => {
   const handleLogout = async () => {
     setIsOpen(false);
     try {
-      const res = await axios.post("https://blogify-web-app-mkqy.onrender.com/auth/logout");
+      const res = await post("/auth/logout");
       if (res.status === 200) {
         dispatch(removeUser());
         navigate("/");
@@ -34,7 +34,7 @@ const Navbar = () => {
   const navLinks = [
     { to: "/", label: "🏠 Home" },
     { to: "/about", label: "📖 About" },
-    { to: "/profile/123456", label: "👤 Profile" },
+    { to: `/profile/${id}`, label: "👤 Profile" }
   ];
 
   return (
@@ -67,7 +67,7 @@ const Navbar = () => {
               {/* Profile Image */}
               <img
                 onClick={toggleDropdown}
-                src={`https://blogify-web-app-mkqy.onrender.com/images/${user.profile}`}
+                src={`${BaseUrl}/images/${user.profile}`}
                 alt="profile"
                 className="h-12 w-12 hidden lg:block rounded-full border-2 border-blue-400 shadow-lg cursor-pointer hover:scale-110 hover:border-blue-500 transition duration-300 ease-in-out"
               />

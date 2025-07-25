@@ -20,10 +20,14 @@ const app = express();
 DBcon();
 
 // ✅ CORS configuration
-app.use(cors({
-  origin: 'https://blogify-web-app-mkqy.onrender.com',
-  credentials: true,
-}));
+
+app.use(
+  cors({
+    origin: "https://blogify-web-app-mkqy.onrender.com",
+    credentials: true,
+  })
+);
+
 
 // ✅ Middlewares
 app.use(cookieParser());

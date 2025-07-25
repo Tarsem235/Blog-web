@@ -1,7 +1,7 @@
 import React from "react";
 // import { get } from "../../Services/Endpoint";
 import {Link} from "react-router-dom"
-import axios from 'axios'
+import {BaseUrl, get , dele} from "../Services/Endpoint"
 import { useEffect, useState } from "react";
 export default function Dashboard() {
   const [posts, setPosts] = useState([])
@@ -11,7 +11,7 @@ export default function Dashboard() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const res = await axios.get('https://blogify-web-app-mkqy.onrender.com/dashboard')
+        const res = await get('/dashboard')
         const data = res.data
         setPosts(data.posts)
         setUser(data.Users)
@@ -33,7 +33,7 @@ const deletePost = async (id) => {
       const token = localStorage.getItem("token");
       console.log("📦 Token:", token);
 
-      await axios.delete(`https://blogify-web-app-mkqy.onrender.com/blog/delete/${id}`, {
+      await dele(`/blog/delete/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -1,12 +1,12 @@
 import React from "react";
 import { FaUserCircle, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import { useState , useEffect } from "react";
-import axios from "axios";
+import {BaseUrl, get} from "../Services/Endpoint"
 import { Link } from "react-router-dom";
 export default function HomePage() {
   const [posts , setPost]=useState([])
   useEffect(()=>{
- const res=axios.get("https://blogify-web-app-mkqy.onrender.com/blog/getPost")
+ const res=get("/blog/getPost")
 .then((res)=> {
   setPost(res.data.posts)
   console.log(res.data.posts)
@@ -57,7 +57,7 @@ export default function HomePage() {
                 className="bg-white rounded-xl shadow hover:shadow-xl hover:scale-105 transition-all"
               >
                 <img
-                  src={`https://blogify-web-app-mkqy.onrender.com/images/${blog.image}`}
+                  src={`${BaseUrl}/images/${blog.image}`}
                   alt={`Blog Cover ${blog}`}
                   className="rounded-t-xl w-full h-52 object-cover"
                 />

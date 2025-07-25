@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import axios from "axios";
+import {BaseUrl, post} from "../Services/Endpoint"
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { SetUser } from "../redux/AuthReducer";
@@ -36,7 +36,7 @@ const Login = () => {
     if (Object.keys(validationErrors).length > 0) return;
 
     try {
-      const res = await axios.post("https://blogify-web-app-mkqy.onrender.com/auth/login", form);
+      const res = await post("/auth/login", form);
       const data = res.data;
       localStorage.setItem("token", res.data.token);
       toast.success("Login successful 🎉", { position: "top-right" });

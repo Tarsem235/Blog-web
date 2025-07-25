@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import {BaseUrl, patch} from "../Services/Endpoint"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -36,7 +36,7 @@ const EditPost = () => {
       formData.append("desc", form.desc);
       if (image) formData.append("postimage", image);
 
-      await axios.patch(`https://blogify-web-app-mkqy.onrender.com/blog/update/${id}`, formData, {
+      await patch(`/blog/update/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

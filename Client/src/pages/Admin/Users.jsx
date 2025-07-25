@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {BaseUrl, get , dele} from "../Services/Endpoint"
 
 export default function Users() {
   const [Users, setUsers] = useState([]);
@@ -9,7 +9,7 @@ export default function Users() {
     const getData = async () => {
       try {
         const token = localStorage.getItem("token");
-        const res = await axios.get("https://blogify-web-app-mkqy.onrender.com/dashboard", {
+        const res = await get("/dashboard", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -33,7 +33,7 @@ export default function Users() {
         const token = localStorage.getItem("token");
         console.log("📦 Token:", localStorage.getItem("token"));
 
-        await axios.delete(`https://blogify-web-app-mkqy.onrender.com/dashboard/delete/${id}`, {
+        await dele(`/dashboard/delete/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

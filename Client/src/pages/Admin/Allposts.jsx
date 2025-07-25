@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import {BaseUrl, get , post} from "../Services/Endpoint"
 import { Link } from "react-router-dom";
 
 export default function AllPosts() {
@@ -12,7 +12,7 @@ export default function AllPosts() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res = await axios.get("https://blogify-web-app-mkqy.onrender.com/blog/getPost");
+        const res = await get("/blog/getPost");
         setPosts(res.data.posts);
       } catch (err) {
         console.error("Failed to fetch posts:", err);
@@ -26,8 +26,8 @@ export default function AllPosts() {
     const fetchComments = async () => {
       if (!activePost) return;
       try {
-        const res = await axios.get(
-          `https://blogify-web-app-mkqy.onrender.com/comment/addcomment/${activePost._id}`
+        const res = await get(
+          `/comment/addcomment/${activePost._id}`
         );
         setComments(res.data.comments);
         console.log(res.data.comments);
@@ -42,7 +42,7 @@ export default function AllPosts() {
   const handlePostComment = async () => {
     if (!newComment.trim()) return;
     try {
-      const res = await axios.post("https://blogify-web-app-mkqy.onrender.com/comment/addcomment", {
+      const res = await post("/comment/addcomment", {
         postId: activePost._id,
         user: "Tarsem", // Replace with logged-in user
         text: newComment,
@@ -70,7 +70,7 @@ export default function AllPosts() {
           >
             <div className="relative">
               <img
-                src={`https://blogify-web-app-mkqy.onrender.com/images/${post.image}`}
+                src={`${BaseUrl}/images/${post.image}`}
                 alt={post.title}
                 className="w-full h-48 object-cover rounded-t-2xl"
               />
@@ -107,7 +107,7 @@ export default function AllPosts() {
 
             {/* Post Details */}
             <img
-              src={`https://blogify-web-app-mkqy.onrender.com/images/${activePost.image}`}
+              src={`${BaseUrl}/images/${activePost.image}`}
               alt={activePost.title}
               className="w-full rounded-lg mb-4"
             />

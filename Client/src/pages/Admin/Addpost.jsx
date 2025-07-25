@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import {BaseUrl, get} from "../Services/Endpoint"
 export default function AddPost() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -34,8 +34,8 @@ export default function AddPost() {
       const token = localStorage.getItem("token");
       console.log("Token:", token);
 
-      const res = await axios.post(
-        "https://blogify-web-app-mkqy.onrender.com/blog/create",
+      const res = await post(
+        "/blog/create",
         formData,
         {
           headers: {
