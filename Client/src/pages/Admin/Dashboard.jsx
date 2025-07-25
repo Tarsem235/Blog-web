@@ -1,7 +1,7 @@
 import React from "react";
 // import { get } from "../../Services/Endpoint.js";
 import {Link} from "react-router-dom"
-import {BaseUrl, post} from "../../Services/Endpoint"
+import {BaseUrl, get , dele} from "../../Services/Endpoint"
 import { useEffect, useState } from "react";
 export default function Dashboard() {
   const [posts, setPosts] = useState([])
@@ -105,7 +105,8 @@ const deletePost = async (id) => {
             </Link>
             <button
               className="text-red-600 hover:text-red-900 cursor-pointer"
-              onClick={() => deletePost(post._id)}
+              onClick={() => post?._id && deletePost(post._id)}
+
             >
                Delete
             </button>
