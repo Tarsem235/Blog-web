@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { SetUser } from "../redux/AuthReducer";
-import {BaseUrl, get} from "../Services/Endpoint"
+import {BaseUrl, get} from "../Services/Endpoint.js"
 
 export default function BlogUserProfile() {
   const [posts, setPosts] = useState([]);

@@ -1,7 +1,7 @@
 import React from "react";
-// import { get } from "../../Services/Endpoint";
+// import { get } from "../../Services/Endpoint.js";
 import {Link} from "react-router-dom"
-import {BaseUrl, get , dele} from "../Services/Endpoint"
+import {BaseUrl, get , dele} from "../Services/Endpoint.js"
 import { useEffect, useState } from "react";
 export default function Dashboard() {
   const [posts, setPosts] = useState([])

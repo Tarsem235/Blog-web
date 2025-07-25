@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import axios from "axios";
-import { post } from "../Services/Endpoint";
+import { post } from "../Services/Endpoint.js";
 import { useDispatch } from "react-redux";
 import { SetUser } from "../redux/AuthReducer";
 import "react-toastify/dist/ReactToastify.css";

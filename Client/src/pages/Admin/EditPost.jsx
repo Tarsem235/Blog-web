@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {BaseUrl, patch} from "../Services/Endpoint"
+import {BaseUrl, patch} from "../Services/Endpoint.js"
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
