@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {BaseUrl, post} from "../../Services/Endpoint"
+import { get , dele} from "../../Services/Endpoint"
 
 export default function Users() {
   const [Users, setUsers] = useState([]);

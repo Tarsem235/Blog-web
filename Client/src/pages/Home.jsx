@@ -5,14 +5,20 @@ import {BaseUrl, get} from "../Services/Endpoint"
 import { Link } from "react-router-dom";
 export default function HomePage() {
   const [posts , setPost]=useState([])
-  useEffect(()=>{
- const res=get("/blog/getPost")
-.then((res)=> {
-  setPost(res.data.posts)
-  console.log(res.data.posts)
-})
-  },[])
-  return (
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const res = await get("/blog/getPost");
+        setPost(res.data.posts || []); // fallback empty array
+        console.log(res.data.posts);
+      } catch (error) {
+        console.error("🚨 Failed to fetch posts:", error);
+      }
+    };
+  
+    fetchPosts();
+  }, []);
+    return (
     <div className="font-sans text-gray-800 pt-14">
       <section
         className="pt-24 h-[80vh] bg-cover bg-center flex flex-col justify-center items-center text-center"

@@ -202,9 +202,9 @@ export default function BlogUserProfile() {
         <div className="border-t mt-8 pt-4">
           <h2 className="text-lg font-semibold text-gray-800 mb-4">📸 All Posts</h2>
           <div className="grid grid-cols-3 md:grid-cols-7">
-            {posts.map((post, id) => (
+            {posts.map((post) => (
               <div
-                key={id}
+                key={post._id}
                 className="relative group overflow-hidden rounded cursor-pointer"
               >
                 <Link to={`/post/${post._id}`}>

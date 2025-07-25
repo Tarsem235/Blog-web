@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import {BaseUrl, post} from "../Services/Endpoint.js"
+import {BaseUrl, post , get} from "../Services/Endpoint.js"
 
 
 const SinglePost = () => {
