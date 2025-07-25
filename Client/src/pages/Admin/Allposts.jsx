@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {BaseUrl, get , post} from "../Services/Endpoint"
+import {BaseUrl, get , post} from "../Services/Endpoint.js"
 import { Link } from "react-router-dom";
 
 export default function AllPosts() {
