@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {BaseUrl, post} from "../Services/Endpoint.js"
+import {BaseUrl, post} from "../Services/Endpoint"
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import { removeUser } from "../redux/AuthReducer";

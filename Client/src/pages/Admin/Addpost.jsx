@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {BaseUrl, post} from "../Services/Endpoint.js"
+import {BaseUrl, post} from "../../Services/Endpoint"
 export default function AddPost() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");

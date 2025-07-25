@@ -1,7 +1,7 @@
 import React from "react";
 import { FaUserCircle, FaFacebookF, FaTwitter, FaInstagram } from "react-icons/fa";
 import { useState , useEffect } from "react";
-import {BaseUrl, get} from "../Services/Endpoint.js"
+import {BaseUrl, get} from "../Services/Endpoint"
 import { Link } from "react-router-dom";
 export default function HomePage() {
   const [posts , setPost]=useState([])
