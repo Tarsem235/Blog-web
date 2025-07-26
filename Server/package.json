@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-  "start": "node server.js", 
-  "build": "echo 'No build needed for backend'",
-},
+    "start": "node server.js",
+    "build": "echo 'No build needed for backend'"
+  },
   "keywords": [],
   "author": "",
-
   "license": "ISC",
   "description": "",
   "dependencies": {
