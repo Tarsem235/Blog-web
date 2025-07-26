@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-export const BaseUrl = 'http://localhost:5000';
-
+const BaseUrl = process.env.REACT_APP_BASE_URL;
 const instanse = axios.create({
     baseURL: BaseUrl, // ✅ correct key
     withCredentials: true
