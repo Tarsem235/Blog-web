@@ -6,8 +6,8 @@ const {createBlog , deletePost , getPost , Update} = require("../controllers/blo
 
 const blogrouter = express.Router();
 
-blogrouter.post("/create",isAdmin,upload.single('postimage'), createBlog);
-blogrouter.delete('/delete/:id' , isAdmin , deletePost)
+blogrouter.post("/create",upload.single('postimage'), createBlog);
+blogrouter.delete('/delete/:id' , deletePost)
 blogrouter.get('/getPost' , getPost)
 blogrouter.patch('/update/:id', isAdmin, upload.single('postimage'), Update)
 

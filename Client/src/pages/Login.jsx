@@ -1,7 +1,8 @@
+// 📁 src/pages/Login.jsx
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import {BaseUrl, post} from "../Services/Endpoint.js"
+import { BaseUrl, post } from "../Services/Endpoint.js";
 import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { SetUser } from "../redux/AuthReducer";
@@ -12,10 +13,12 @@ const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
 
+  // Handle input changes
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // Validate inputs
   const validate = () => {
     const newErrors = {};
     if (!form.email.trim()) newErrors.email = "Email is required";
@@ -29,6 +32,7 @@ const Login = () => {
     return newErrors;
   };
 
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validate();
@@ -38,11 +42,29 @@ const Login = () => {
     try {
       const res = await post("/auth/login", form);
       const data = res.data;
-      localStorage.setItem("token", res.data.token);
-      toast.success("Login successful 🎉", { position: "top-right" });
-      dispatch(SetUser(data.user));
-      setTimeout(() => navigate("/"), 2000);
+
+      console.log("✅ Login Response:", data);
+
+      if (data?.user?.token) {
+        // Save token to localStorage
+        localStorage.setItem("token", data.user.token);
+        console.log("📦 Token Saved:", data.user.token);
+
+        // Dispatch user to Redux
+        dispatch(SetUser(data.user));
+
+        // Show success message
+        toast.success("Login successful 🎉", { position: "top-right" });
+
+        // Delay navigation slightly to ensure token is stored
+        setTimeout(() => navigate("/"), 300);
+      } else {
+        toast.error("❌ No token received from server", {
+          position: "top-right",
+        });
+      }
     } catch (err) {
+      console.error("❌ Login Error:", err.response?.data);
       toast.error(
         err.response?.data?.message || "Login failed. Please try again.",
         { position: "top-right" }
@@ -97,7 +119,7 @@ const Login = () => {
             )}
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
             className="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600 transition-colors shadow-md"
@@ -116,6 +138,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
+
       <ToastContainer />
     </div>
   );

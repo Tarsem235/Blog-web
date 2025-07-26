@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/User");
-const jwt = require('jsonwebtoken')
+const createTokenAndSaveCookie = require("../jwt/generatetoken");
 // REGISTER USER
 const registerUser = async (req, res) => {
   try {
@@ -64,57 +64,63 @@ const registerUser = async (req, res) => {
 
 // Login
 const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log("Received email:", email);
+  console.log("Received password:", password);
+
   try {
-    const { email, password } = req.body;
-
     if (!email || !password) {
-      return res.status(400).json({ success: false, message: "All fields are required" });
+      return res.status(400).json({ message: "Email and password are required" });
     }
 
-    const FindUser = await userModel.findOne({ email });
-    if (!FindUser) {
-      return res.status(404).json({ success: false, message: "No User Found. Please register" });
+    const user = await userModel.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: "Invalid user or password" });
     }
 
-    const confirmPassword = await bcrypt.compare(password, FindUser.password);
-    if (!confirmPassword) {
-      return res.status(401).json({ success: false, message: "Password doesn't match" });
+    console.log("User found:", user);
+
+
+    if (!user.password) {
+      return res.status(500).json({ message: "User password is missing in database" });
     }
 
-    // ✅ Fix: Correct payload
-    const token = jwt.sign(
-      { userId: FindUser._id.toString() },
-      process.env.JWT_SECRATE,
-      { expiresIn: '30d' }
-    );
+    const isMatch = await bcrypt.compare(password, user.password);
 
-    console.log("✅ Token Payload:", jwt.decode(token)); // ✅ Check payload
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid user or password" });
+    }
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 30 * 24 * 60 * 60 * 1000
+    const token = createTokenAndSaveCookie(user._id, res);
+
+    res.status(200).json({
+      message: "User logged in successfully",
+      user: {
+        token,
+        _id: user._id,
+        name: user.username,
+        email: user.email,
+        profile: user.profile, // ✅ important
+        role: user.role  
+      },
     });
-
-    res.status(200).json({ success: true, message: "Login Successfully", user: FindUser, token });
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: "Internal Server Error" });
+  } catch (err) {
+    console.error("Error during login:", err);
+    res.status(500).json({ message: "Server error" });
   }
 };
-
 // // Logout
 const LogOut = async (req, res) => {
-  try{
-res.clearCookie('token')
-res.status(200).json({sucess:true,message:' Logout Sucessfully'})
+  try {
+    res.clearCookie('token')
+    res.status(200).json({ sucess: true, message: ' Logout Sucessfully' })
   }
-  catch(error){
-  console.error(error);
+  catch (error) {
+    console.error(error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 }
 
-module.exports = { registerUser ,loginUser , LogOut };
+module.exports = { registerUser, loginUser, LogOut };

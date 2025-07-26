@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
-import {BaseUrl, post , get} from "../Services/Endpoint.js"
-
+import { BaseUrl, post, get } from "../Services/Endpoint.js";
+import "react-toastify/dist/ReactToastify.css";
 
 const SinglePost = () => {
   const { id } = useParams();
@@ -11,11 +11,12 @@ const SinglePost = () => {
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
 
+  // Fetch single post
   useEffect(() => {
     const fetchPost = async () => {
       try {
         const res = await get(`/api/singlepost/${id}`, {
-          withCredentials: true, // 👈 if your backend uses cookies for auth
+          withCredentials: true,
         });
         console.log("👉 Post Data:", res.data);
         setPost(res.data.Post);
@@ -29,58 +30,61 @@ const SinglePost = () => {
     fetchPost();
   }, [id]);
 
+  // Handle comment submission
   const handleCommentSubmit = async (e) => {
-  e.preventDefault();
-  const token = localStorage.getItem("token");
+    e.preventDefault();
 
-  if (!token) {
-    toast.error("Please login first to comment!");
-    return;
-  }
+    const token = localStorage.getItem("token");
+    console.log("🔐 Token:", token);
 
-  try {
-    const res = await post(
-      `/comment/addcomment`,
-      {
-        postId: id,
-        comment: newComment,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        withCredentials: true,
-      }
-    );
-
-    console.log("✅ Comment Added:", res.data);
-
-    // Add the new comment directly to Post.comments
-   const addedComment = {
-  userId: { username: res.data?.user?.username || "You" }, // 🛠 fallback
-  comment: newComment,
-};
-
-
-    setPost((prev) => ({
-      ...prev,
-      comments: [...prev.comments, addedComment], // ✅ Add to state
-    }));
-
-    setNewComment(""); // Clear textarea
-    toast.success("Comment added successfully!");
-  } catch (err) {
-    console.error("❌ Error adding comment:", err.response?.data || err.message);
-    if (err.response?.status === 401) {
-      toast.error("Session expired. Please login again!");
-      localStorage.removeItem("token");
-    } else {
-      toast.error("Failed to add comment. Try again!");
+    if (!token) {
+      toast.error("Please login first to comment!");
+      return;
     }
-  }
-};
 
+    if (!newComment.trim()) {
+      toast.warning("Comment cannot be empty!");
+      return;
+    }
 
+    try {
+      const res = await post(
+        `/comment/addcomment`,
+        { postId: id, comment: newComment },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true,
+        }
+      );
+
+      console.log("✅ Comment Added:", res.data);
+
+      // Add the new comment to state
+      const addedComment = {
+        userId: { username: res.data?.user?.username || "You" },
+        comment: newComment,
+      };
+
+      setPost((prev) => ({
+        ...prev,
+        comments: [...(prev.comments || []), addedComment],
+      }));
+
+      setNewComment("");
+      toast.success("Comment added successfully!");
+    } catch (err) {
+      console.error("❌ Error adding comment:", err.response?.data || err.message);
+
+      if (err.response?.status === 401) {
+        toast.error("Session expired. Please login again!");
+        localStorage.removeItem("token");
+      } else {
+        toast.error("Failed to add comment. Try again!");
+      }
+    }
+  };
+
+  // Show loading
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -89,6 +93,7 @@ const SinglePost = () => {
     );
   }
 
+  // Post not found
   if (!Post) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -111,7 +116,7 @@ const SinglePost = () => {
             {Post.title}
           </h1>
           <p className="text-gray-500 mb-6 text-sm">
-            <span>{Post.createdAt.slice(0, 10)}</span>
+            <span>{Post.createdAt?.slice(0, 10)}</span>
           </p>
           <p className="text-base leading-relaxed text-gray-700">{Post.desc}</p>
         </div>
@@ -160,6 +165,8 @@ const SinglePost = () => {
           </form>
         </div>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

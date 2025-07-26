@@ -70,7 +70,7 @@ export default function AllPosts() {
           >
             <div className="relative">
               <img
-                src={`${BaseUrl}/images/${post.image}`}
+                src={`/images/${post.image}`}
                 alt={post.title}
                 className="w-full h-48 object-cover rounded-t-2xl"
               />
@@ -82,7 +82,6 @@ export default function AllPosts() {
               <h2 className="text-xl font-bold text-gray-800 mb-2">
                 {post.title}
               </h2>
-              <p className="text-gray-600 text-sm mb-4">{post.desc}...</p>
               <Link to={`/post/${post._id}`}>
                 <li className="w-full bg-pink-600 text-white py-2 rounded-lg hover:bg-pink-700 transition font-semibold">
                   View Details

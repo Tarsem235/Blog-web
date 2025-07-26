@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {BaseUrl, post} from "../../Services/Endpoint"
+import { post} from "../../Services/Endpoint"
 export default function AddPost() {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -63,7 +63,7 @@ export default function AddPost() {
   };
 
   return (
-    <div className="p-4 mt-10">
+    <div className="p-4 mt-20">
       {/* Toast Container */}
       <ToastContainer position="top-right" autoClose={3000} />
 

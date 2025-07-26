@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const BaseUrl = 'https://blogify-web-app-mkqy.onrender.com';
+export const BaseUrl = 'http://localhost:5000';
 
 const instanse = axios.create({
     baseURL: BaseUrl, // ✅ correct key

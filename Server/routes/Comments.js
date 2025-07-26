@@ -7,8 +7,7 @@ const { isLogin } = require('../middleware/isAdmin');
 const commentRouter = express.Router()
 
 // Route to add a comment
-commentRouter.post('/addcomment', isLogin , Addcomment)
+commentRouter.post('/addcomment', Addcomment)
 
 
 module.exports = commentRouter
-

@@ -3,7 +3,6 @@ const userModel = require("../models/User");
 
 const isAdmin = async (req, res, next) => {
   try {
-    // ✅ Token from Authorization header
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -11,8 +10,7 @@ const isAdmin = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-
-    const decoded = JWT.verify(token, process.env.JWT_SECRATE);
+    const decoded = JWT.verify(token, process.env.JWT_SECRET); // ✅ fixed here
     console.log("✅ Decoded JWT:", decoded);
 
     const user = await userModel.findById(decoded.userId);
@@ -24,17 +22,13 @@ const isAdmin = async (req, res, next) => {
       return res.status(403).json({ success: false, message: "User is not an admin" });
     }
 
-    req.user = user; // ✅ Pass user to next middleware
+    req.user = user;
     next();
   } catch (error) {
     console.error("❌ isAdmin Middleware Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
-
-
-
-
 
 const isLogin = async (req, res, next) => {
   try {
@@ -45,7 +39,7 @@ const isLogin = async (req, res, next) => {
     }
 
     const token = authHeader.split(" ")[1];
-    const decoded = JWT.verify(token, process.env.JWT_SECRATE);
+    const decoded = JWT.verify(token, process.env.JWT_SECRET); // ✅ fixed here
 
     const user = await userModel.findById(decoded.userId);
     if (!user) {
@@ -59,6 +53,5 @@ const isLogin = async (req, res, next) => {
     res.status(401).json({ success: false, message: "Invalid or expired token" });
   }
 };
-
 
 module.exports = { isAdmin, isLogin };
