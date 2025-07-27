@@ -23,7 +23,11 @@ DBcon();
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+   origin: [
+  "http://localhost:5173",                 // for local dev
+  "https://blogweb-ten.vercel.app"         // for deployed frontend
+],
+
     credentials: true,
   })
 );
