@@ -1,3 +1,4 @@
+import React from 'react';
 import axios from 'axios';
 const BaseUrl = import.meta.env.VITE_BASE_URL;
 
@@ -11,4 +12,4 @@ export const get = (url, params) => instanse.get(url, { params });
 export const post = (url, data) => instanse.post(url, data);
 export const patch = (url, data) => instanse.patch(url, data);
 export const dele = (url) => instanse.delete(url);
-export default BaseUrl;
+export {BaseUrl}
