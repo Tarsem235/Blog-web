@@ -12,8 +12,7 @@ import {
   UserCircle,
   LayoutDashboard,
   LogOut,
-  LogIn,
-  Search,
+  LogIn
 } from "lucide-react";
 
 const Navbar = () => {
@@ -43,8 +42,8 @@ const Navbar = () => {
     }
   };
 
-  const handleSearch = () => {
-    if (search.trim()) {
+  const handleSearchEnter = (e) => {
+    if (e.key === "Enter" && search.trim()) {
       navigate(`/search?title=${encodeURIComponent(search.trim())}`);
       setSearch("");
     }
@@ -53,12 +52,12 @@ const Navbar = () => {
   return (
     <header className="fixed w-full bg-gray-100 backdrop-blur-sm shadow-md z-50">
       <div className="max-w-7xl mx-auto py-3 px-4 flex justify-between items-center">
-        {/* Logo */}
+        {/* Left - Logo */}
         <div className="text-3xl font-extrabold tracking-wide text-gray-800">
           Blogify
         </div>
 
-        {/* Desktop Menu */}
+        {/* Center - Nav Links */}
         {user && (
           <nav className="hidden md:flex items-center space-x-6">
             <Link to="/" className="flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium transition">
@@ -73,26 +72,19 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Right Section: Search + Profile */}
-        <div className="flex items-center space-x-3">
-          {/* 🔍 Search Box */}
-          <div className="hidden md:flex items-center space-x-1">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search post..."
-              className="px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            />
-            <button
-              onClick={handleSearch}
-              className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition"
-            >
-              <Search size={18} />
-            </button>
-          </div>
+        {/* Right - Search + Profile */}
+        <div className="flex items-center space-x-4">
+          {/* 🔍 Search Field */}
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={handleSearchEnter}
+            placeholder="Search post..."
+            className="hidden md:block px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
 
-          {/* Profile or Sign In */}
+          {/* 👤 Profile or Sign In */}
           {user ? (
             <div className="relative">
               <img
@@ -170,24 +162,20 @@ const Navbar = () => {
           )}
 
           {/* 🔍 Search in Mobile */}
-          <div className="flex items-center gap-2">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search post..."
-              className="flex-1 px-3 py-1 rounded-md border border-gray-300 focus:outline-none"
-            />
-            <button
-              onClick={() => {
-                handleSearch();
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                navigate(`/search?title=${encodeURIComponent(search.trim())}`);
+                setSearch("");
                 setMobileMenu(false);
-              }}
-              className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition"
-            >
-              <Search size={18} />
-            </button>
-          </div>
+              }
+            }}
+            placeholder="Search post..."
+            className="w-full px-3 py-1 rounded-md border border-gray-300 focus:outline-none"
+          />
 
           {user ? (
             <button
