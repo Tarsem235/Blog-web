@@ -23,10 +23,7 @@ DBcon();
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://blog-web-app-001.netlify.app"
-    ],
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
