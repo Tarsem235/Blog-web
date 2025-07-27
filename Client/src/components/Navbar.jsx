@@ -13,6 +13,7 @@ import {
   LayoutDashboard,
   LogOut,
   LogIn,
+  Search,
 } from "lucide-react";
 
 const Navbar = () => {
@@ -20,6 +21,8 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
+  const [search, setSearch] = useState(""); // 🔍 Search state
+
   const user = useSelector((state) => state.auth.user);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
@@ -40,17 +43,24 @@ const Navbar = () => {
     }
   };
 
+  const handleSearch = () => {
+    if (search.trim()) {
+      navigate(`/search?title=${encodeURIComponent(search.trim())}`);
+      setSearch("");
+    }
+  };
+
   return (
     <header className="fixed w-full bg-gray-100 backdrop-blur-sm shadow-md z-50">
-      <div className="mx-auto py-3 flex justify-between">
+      <div className="max-w-7xl mx-auto py-3 px-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-3xl px-6 font-extrabold tracking-wide text-gray-800">
+        <div className="text-3xl font-extrabold tracking-wide text-gray-800">
           Blogify
         </div>
 
         {/* Desktop Menu */}
         {user && (
-          <nav className="hidden md:flex space-x-6 py-3 pl-[25cm]">
+          <nav className="hidden md:flex items-center space-x-6">
             <Link to="/" className="flex items-center gap-2 text-gray-800 hover:text-blue-600 font-medium transition">
               <Home size={18} /> Home
             </Link>
@@ -63,28 +73,45 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Profile or Sign In */}
+        {/* Right Section: Search + Profile */}
         <div className="flex items-center space-x-3">
+          {/* 🔍 Search Box */}
+          <div className="hidden md:flex items-center space-x-1">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search post..."
+              className="px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button
+              onClick={handleSearch}
+              className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition"
+            >
+              <Search size={18} />
+            </button>
+          </div>
+
+          {/* Profile or Sign In */}
           {user ? (
-            <div className="relative pr-4">
+            <div className="relative">
               <img
                 onClick={toggleDropdown}
                 src={`${BaseUrl}/images/${user.profile}`}
                 alt="profile"
-                className="h-12 w-12 hidden lg:block rounded-full border-2 border-blue-400 shadow-lg cursor-pointer hover:scale-110 hover:border-blue-500 transition duration-300 ease-in-out"
+                className="h-10 w-10 rounded-full border-2 border-blue-400 shadow-lg cursor-pointer hover:scale-110 hover:border-blue-500 transition duration-300"
               />
-
-              {/* Dropdown Menu */}
+              {/* Dropdown */}
               {isOpen && (
-                <ul className="absolute right-0 mt-3 w-48 bg-white/80 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-200 z-50 animate-fade-in">
+                <ul className="absolute right-0 mt-3 w-48 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200 z-50">
                   {user.role === "admin" && (
-                    <li className="px-5 py-3 hover:bg-blue-50 hover:text-blue-700 font-medium rounded-t-2xl transition-colors duration-300">
+                    <li className="px-5 py-3 hover:bg-blue-50 hover:text-blue-700 font-medium transition-colors duration-300">
                       <Link to="/dashboard" className="flex items-center gap-2">
                         <LayoutDashboard size={18} /> Dashboard
                       </Link>
                     </li>
                   )}
-                  <li className="px-5 py-3 border-t border-gray-200 hover:bg-red-50 hover:text-red-600 font-medium rounded-b-2xl transition-colors duration-300">
+                  <li className="px-5 py-3 border-t border-gray-200 hover:bg-red-50 hover:text-red-600 font-medium transition-colors duration-300">
                     <button
                       onClick={handleLogout}
                       className="w-full text-left flex items-center gap-2"
@@ -141,6 +168,26 @@ const Navbar = () => {
               </Link>
             </>
           )}
+
+          {/* 🔍 Search in Mobile */}
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Search post..."
+              className="flex-1 px-3 py-1 rounded-md border border-gray-300 focus:outline-none"
+            />
+            <button
+              onClick={() => {
+                handleSearch();
+                setMobileMenu(false);
+              }}
+              className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 transition"
+            >
+              <Search size={18} />
+            </button>
+          </div>
 
           {user ? (
             <button
