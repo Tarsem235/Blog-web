@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 export default function HomePage() {
   const [posts , setPost]=useState([])
   useEffect(() => {
+    console.log("✅ BASE URL:", import.meta.env.VITE_BASE_URL);
+
     const fetchPosts = async () => {
       try {
         const res = await get("/blog/getPost");
