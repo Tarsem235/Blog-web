@@ -20,7 +20,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [mobileMenu, setMobileMenu] = useState(false);
-  const [search, setSearch] = useState(""); // 🔍 Search state
 
   const user = useSelector((state) => state.auth.user);
 
@@ -39,13 +38,6 @@ const Navbar = () => {
     } catch (err) {
       console.error(err);
       toast.error("⚠️ Logout Failed");
-    }
-  };
-
-  const handleSearchEnter = (e) => {
-    if (e.key === "Enter" && search.trim()) {
-      navigate(`/search?title=${encodeURIComponent(search.trim())}`);
-      setSearch("");
     }
   };
 
@@ -72,19 +64,8 @@ const Navbar = () => {
           </nav>
         )}
 
-        {/* Right - Search + Profile */}
+        {/* Right - Profile or Login */}
         <div className="flex items-center space-x-4">
-          {/* 🔍 Search Field */}
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={handleSearchEnter}
-            placeholder="Search post..."
-            className="hidden md:block px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          />
-
-          {/* 👤 Profile or Sign In */}
           {user ? (
             <div className="relative">
               <img
@@ -93,7 +74,6 @@ const Navbar = () => {
                 alt="profile"
                 className="h-10 w-10 rounded-full border-2 border-blue-400 shadow-lg cursor-pointer hover:scale-110 hover:border-blue-500 transition duration-300"
               />
-              {/* Dropdown */}
               {isOpen && (
                 <ul className="absolute right-0 mt-3 w-48 bg-white/90 backdrop-blur-xl rounded-2xl shadow-2xl border border-gray-200 z-50">
                   {user.role === "admin" && (
@@ -122,7 +102,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          {/* Hamburger Menu */}
+          {/* Mobile Menu Button */}
           <button
             onClick={toggleMobileMenu}
             className="md:hidden text-gray-700 focus:outline-none"
@@ -160,23 +140,6 @@ const Navbar = () => {
               </Link>
             </>
           )}
-
-          {/* 🔍 Search in Mobile */}
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                navigate(`/search?title=${encodeURIComponent(search.trim())}`);
-                setSearch("");
-                setMobileMenu(false);
-              }
-            }}
-            placeholder="Search post..."
-            className="w-full px-3 py-1 rounded-md border border-gray-300 focus:outline-none"
-          />
-
           {user ? (
             <button
               onClick={() => {
