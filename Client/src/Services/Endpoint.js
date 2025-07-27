@@ -1,5 +1,6 @@
 import axios from 'axios';
-export const BaseUrl = process.env.REACT_APP_BASE_URL;
+const BaseUrl = import.meta.env.VITE_BASE_URL;
+
 const instanse = axios.create({
     baseURL: BaseUrl, // ✅ correct key
     withCredentials: true
@@ -10,3 +11,4 @@ export const get = (url, params) => instanse.get(url, { params });
 export const post = (url, data) => instanse.post(url, data);
 export const patch = (url, data) => instanse.patch(url, data);
 export const dele = (url) => instanse.delete(url);
+export default BaseUrl;
